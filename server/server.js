@@ -19,7 +19,9 @@ app.listen(port, () => {
 // invoke routes from endpoint folder
 const getData = require("./endPoint/getData");
 const checkIn = require("./endPoint/checkIn");
+const checkOut = require("./endPoint/checkOut");
 
 // run the endpoint into the server
 app.get("/data", getData);
 app.put("/checkIn", checkIn);
+app.put("/checkOut", checkOut);
