@@ -15,3 +15,9 @@ pool.connect();
 app.listen(port, () => {
   console.log(`Server is running on Port: ${port}`);
 });
+
+// invoke routes from endpoint folder
+const getData = require("./endPoint/getData");
+
+// run the endpoint into the server
+app.get("/data", getData);
