@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const cron = require('node-cron');
 
 const cors = require("cors");
 const port = process.env.PORT || 3099;
@@ -11,6 +12,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 pool.connect();
+
+// Schedule task to truncate the table at 23:59 every day
+cron.schedule('59 23 * * *', async () => {
+  try {
+    await pool.query('TRUNCATE TABLE form_data');
+    console.log('Table truncated');
+  } catch (err) {
+    console.error('Error truncating table', err);
+  }
+});
 
 app.listen(port, () => {
   console.log(`Server is running on Port: ${port}`);
