@@ -15,8 +15,9 @@ pool.connect();
 
 // Schedule task to truncate the table at 23:59 every day
 cron.schedule('59 23 * * *', async () => {
+  const query = 'TRUNCATE TABLE form_data'
   try {
-    await pool.query('TRUNCATE TABLE form_data');
+    await pool.query(query);
     console.log('Table truncated');
   } catch (err) {
     console.error('Error truncating table', err);
