@@ -33,9 +33,11 @@ const getData = require("./endPoint/getData");
 const checkIn = require("./endPoint/checkIn");
 const checkOut = require("./endPoint/checkOut");
 const postFormData = require("./endPoint/postFormData");
+const getFormData = require("./endPoint/getFormData");
 
 // run the endpoint into the server
 app.get("/data", getData);
 app.put("/checkIn", checkIn);
 app.put("/checkOut", checkOut);
 app.post('/submit', postFormData);
+app.get('/formData', getFormData);
