@@ -1,6 +1,6 @@
 const pool = require("../database/data");
 
-const formData = async (req, res) => {
+const postFormData = async (req, res) => {
   const { name, email, phone_number, slack_user } = req.body;
   const query = "INSERT INTO form_data (name, email, phone_number, slack_user) VALUES ($1, $2, $3, $4)"
   try {
@@ -13,4 +13,4 @@ const formData = async (req, res) => {
   }
 };
 
-module.exports = formData;
+module.exports = postFormData;
