@@ -1,3 +1,65 @@
-.nav-container > ul {
+@media (min-width: 300px) and (max-width: 768px) {
+  .nav-container {
+    padding-top: 6px;
+    padding-bottom: 20px;
+    height: 70px;
+    width: 100%;
+    background-color: rgb(5, 6, 6);
+  }
+  .navBar {
+    justify-content: flex-start;
+    gap: 15px;
+    font-size: 30px;
+  }
+
+  .navBar li {
+    text-decoration: none;
+  }
+  .navBar li a {
+    color: #ca4b4b;
+    text-decoration: none; 
+  }
+
+ .navBar li a:hover {
+    color: #e1f185;
+  }
+}
+
+@media (min-width: 769px) {
+  .nav-container {
+    padding-top: 6px;
+    padding-bottom: 30px;
+    width: 100%;
+    height: 70px;
+    background-color: rgb(163, 171, 171);
+  }
+  .navBar {
+    justify-content: flex-start;
+    gap: 45px;
+    font-size: 35px;
+  }
+  .navBar li a {
+    color: #B22222;
+    text-decoration: none; 
+  }
+}
+
+.navBar {
   list-style-type: none;
+  display: flex;
+  align-items: flex-start;
+}
+
+.navBar li {
+  margin-right: 20px;
+  text-decoration: none;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+}
+
+.nav-item span {
+  margin-left: 8px;
 }
