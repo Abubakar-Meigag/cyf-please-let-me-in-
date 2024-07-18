@@ -1,33 +1,78 @@
-import './navBar.css';
-import React from 'react'
+import React from "react";
 import { Link } from "react-router-dom";
-import { IoHome } from "react-icons/io5";
-import { IoLogInSharp } from "react-icons/io5";
+import {
+  IoHome,
+  IoBusiness,
+  IoAdd,
+  IoLogInSharp,
+  IoBody,
+} from "react-icons/io5";
+import "./navBar.css";
 
 const NavBar = () => {
   return (
-    <div className='nav-container'>
-      <ul className='navBar'>
-            <li>
-              <Link to="/">
-                <div className='nav-item'>
-                  <IoHome />
-                  <span>Home</span>
-                </div>
-              </Link>
-            </li>
+    <nav className="navbar-container">
+      <ul className="navbar-menu">
+        <li>
+          <Link to="/" className="navbar-link">
+            <div className="navbar-item">
+              <IoHome />
+              <span>Home</span>
+            </div>
+          </Link>
+        </li>
 
-            <li>
-              <Link to="/checkIn">
-                <div className='nav-item'>
-                  <IoLogInSharp />
-                  <span>CheckIn</span>
-                </div>
-              </Link>
+        <li className="navbar-dropdown">
+          <div className="navbar-item">
+            <IoBusiness />
+            <span>Buildings</span>
+          </div>
+          <ul className="dropdown-menu">
+            <li className="building-item">
+              <div className="dropdown-header">
+                <IoAdd />
+                <span>Cititec</span>
+              </div>
+              <ul className="sub-menu">
+                <li>
+                  <Link to="/cititec/checkIn" className="sub-menu-link">
+                    <IoLogInSharp />
+                    Check-In
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/cititec/guest" className="sub-menu-link">
+                    <IoBody />
+                    Let Me In
+                  </Link>
+                </li>
+              </ul>
             </li>
+            <li className="building-item">
+              <div className="dropdown-header">
+                <IoAdd />
+                <span>Bedford</span>
+              </div>
+              <ul className="sub-menu">
+                <li>
+                  <Link to="/bedford/checkIn" className="sub-menu-link">
+                    <IoLogInSharp />
+                    Check-In
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/bedford/guest" className="sub-menu-link">
+                    <IoBody />
+                    Let Me In
+                  </Link>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
       </ul>
-    </div>
-  )
-}
+    </nav>
+  );
+};
 
-export default NavBar
+export default NavBar;
