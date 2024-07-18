@@ -1,65 +1,90 @@
+/* Mobile styles */
 @media (min-width: 300px) and (max-width: 768px) {
   .nav-container {
-    padding-top: 6px;
-    padding-bottom: 20px;
+    padding: 10px 20px;
     height: 70px;
     width: 100%;
-    background-color: rgb(5, 6, 6);
+    background-color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
   }
+
   .navBar {
-    justify-content: flex-start;
-    gap: 9px;
-    font-size: 30px;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 18px;
   }
 
   .navBar li {
     text-decoration: none;
   }
+
   .navBar li a {
-    color: #ca4b4b;
-    text-decoration: none; 
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
   }
 
- .navBar li a:hover {
-    color: #e1f185;
+  .navBar li a:hover {
+    background-color: #a3a0a0;
+  }
+
+  .nav-item span {
+    margin-left: 8px;
   }
 }
 
+/* Desktop styles */
 @media (min-width: 769px) {
   .nav-container {
-    padding-top: 6px;
-    padding-bottom: 30px;
-    width: 100%;
+    padding: 10px 40px;
     height: 70px;
-    background-color: rgb(163, 171, 171);
+    width: 100%;
+    background-color: #444;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
   }
-  .navBar {
-    justify-content: flex-start;
-    gap: 45px;
-    font-size: 35px;
-  }
-  .navBar li a {
-    color: #cd6161;
-    text-decoration: none; 
-  }
-}
 
-.navBar {
-  list-style-type: none;
-  display: flex;
-  align-items: flex-start;
+  .navBar {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    font-size: 20px;
+  }
+
+  .navBar li a {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  .navBar li a:hover {
+    background-color: #666;
+  }
+
+  .nav-item span {
+    margin-left: 8px;
+  }
 }
 
 .navBar li {
   margin-right: 10px;
-  text-decoration: none;
 }
 
 .nav-item {
   display: flex;
   align-items: center;
-}
-
-.nav-item span {
-  margin-left: 8px;
 }
