@@ -62,12 +62,10 @@ const CheckIn = () => {
             <div className="button-group">
               <button className="checkIn-button">CheckOut</button>
             </div>
-
-            <hr />
+            
           </div>
 
         </div>
-        <hr />
       </div>
     </div>
   );
