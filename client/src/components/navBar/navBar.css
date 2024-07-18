@@ -8,7 +8,7 @@
   }
   .navBar {
     justify-content: flex-start;
-    gap: 15px;
+    gap: 9px;
     font-size: 30px;
   }
 
@@ -39,7 +39,7 @@
     font-size: 35px;
   }
   .navBar li a {
-    color: #B22222;
+    color: #cd6161;
     text-decoration: none; 
   }
 }
@@ -51,7 +51,7 @@
 }
 
 .navBar li {
-  margin-right: 20px;
+  margin-right: 10px;
   text-decoration: none;
 }
 
