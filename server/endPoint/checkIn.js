@@ -6,7 +6,7 @@ const checkIn = async (req, res) => {
   if (!name) {
     return res.status(400).json({ error: "Name is required" });
   }
-  const query = `UPDATE Entry_data
+  const query = `UPDATE bedford_keyHolders
                       SET status = 'in'
                       WHERE name = $1 AND status = 'out'
                       RETURNING *`;
