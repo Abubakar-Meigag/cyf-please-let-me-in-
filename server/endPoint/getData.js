@@ -1,7 +1,7 @@
 const pool = require("../database/data");
 
 const getData = async (req, res) => {
-  const query = "select * from Entry_data";
+  const query = "select * from bedford_keyHolders";
   try {
     const data = await pool.query(query);
     res.status(200).json(data.rows);

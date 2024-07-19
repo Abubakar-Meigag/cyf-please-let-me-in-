@@ -31,24 +31,14 @@ const CheckIn = () => {
 
           <form onSubmit={handleSubmit(handleData)}>
 
-            <div className="form-group">
-              <label>Name</label>
-              <input className="checkIn-input" name="name" {...register("name")} />
-            </div>
-
-            <div className="form-group">
-              <label>Email</label>
-              <input type="email" className="checkIn-input" name="email" {...register("email")} />
+          <div className="form-group">
+              <label>Slack User</label>
+              <input type="text" className="checkIn-input" name="slack_user" {...register("slack_user")} />
             </div>
 
             <div className="form-group">
               <label>Phone Number</label>
               <input type="number" className="checkIn-input" name="phone_number" {...register("phone_number")} />
-            </div>
-
-            <div className="form-group">
-              <label>Slack User</label>
-              <input type="text" className="checkIn-input" name="slack_user" {...register("slack_user")} />
             </div>
 
 
