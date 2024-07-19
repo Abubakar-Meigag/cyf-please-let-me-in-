@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import {
   IoHome,
   IoBusiness,
-  IoAdd,
+  // IoAdd,
   IoLogInSharp,
   IoBody,
 } from "react-icons/io5";
@@ -25,35 +25,12 @@ const NavBar = () => {
         <li className="navbar-dropdown">
           <div className="navbar-item">
             <IoBusiness />
-            <span>Buildings</span>
+            <span>Bedford</span>
           </div>
           <ul className="dropdown-menu">
             <li className="building-item">
               <div className="dropdown-header">
-                <IoAdd />
-                <span>Cititec</span>
               </div>
-              <ul className="sub-menu">
-                <li>
-                  <Link to="/cititec/checkIn" className="sub-menu-link">
-                    <IoLogInSharp />
-                    Check-In
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/cititec/guest" className="sub-menu-link">
-                    <IoBody />
-                    Let Me In
-                  </Link>
-                </li>
-              </ul>
-            </li>
-            <li className="building-item">
-              <div className="dropdown-header">
-                <IoAdd />
-                <span>Bedford</span>
-              </div>
-              <ul className="sub-menu">
                 <li>
                   <Link to="/bedford/checkIn" className="sub-menu-link">
                     <IoLogInSharp />
@@ -66,10 +43,36 @@ const NavBar = () => {
                     Let Me In
                   </Link>
                 </li>
-              </ul>
             </li>
           </ul>
         </li>
+
+        <li className="navbar-dropdown">
+          <div className="navbar-item">
+            <IoBusiness />
+            <span>Cititec</span>
+          </div>
+          <ul className="dropdown-menu">
+            <li className="building-item">
+              <div className="dropdown-header">
+              </div>
+                <li>
+                  <Link to="/cititec/checkIn" className="sub-menu-link">
+                    <IoLogInSharp />
+                    Check-In
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/cititec/guest" className="sub-menu-link">
+                    <IoBody />
+                    Let Me In
+                  </Link>
+                </li>
+            </li>
+          </ul>
+        </li>
+
+
       </ul>
     </nav>
   );
