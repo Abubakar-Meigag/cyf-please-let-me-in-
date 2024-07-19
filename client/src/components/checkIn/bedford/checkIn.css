@@ -17,6 +17,10 @@
       flex-direction: column;
       gap: 20px; 
     }
+
+    .building-name {
+      color: #0175f1;
+    }
     
     .key-holder-section, .non-key-holder-section {
       display: flex;

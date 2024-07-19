@@ -13,7 +13,7 @@ const CheckInCititec = () => {
 
         <div className="key-holder-section">
 
-          <h2>CheckIn Cititec Key Holder</h2>
+          <h2>CheckIn <span className="building-name">Cititec</span> Key Holder</h2>
 
           <input className="checkIn-input" />
 
