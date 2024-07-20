@@ -32,7 +32,7 @@ CREATE TABLE bedford_keyHolders (
 CREATE TABLE bedford_guest (
     id SERIAL PRIMARY KEY,
     slack_user VARCHAR(50),
-    phone_number NUMERIC(20),
+    phone_number VARCHAR(20),
     status VARCHAR(3) DEFAULT 'in',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
