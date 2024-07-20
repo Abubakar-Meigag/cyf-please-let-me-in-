@@ -35,6 +35,7 @@ const checkOut = require("./endPoint/checkOut");
 const postFormData = require("./endPoint/postFormData");
 const getFormData = require("./endPoint/getFormData");
 const formCheckOut = require("./endPoint/formCheckOut");
+const getDataForCititec = require("./endPoint/cititecData");
 
 // run the endpoint into the server
 app.get("/data", getData);
@@ -43,3 +44,4 @@ app.put("/checkOut", checkOut);
 app.post('/submit', postFormData);
 app.get('/formData', getFormData);
 app.put('/formCheckOut', formCheckOut);
+app.get('/getDataForCititec', getDataForCititec);

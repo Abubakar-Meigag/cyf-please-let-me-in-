@@ -6,11 +6,11 @@ const CheckIn = () => {
   const [checkInPeople, setCheckInPeople] = useState([]);
   const [getFormData, setGetFormData] = useState([]);
   const [postFormData, setPostFormData] = useState({
-    slack_user: '',
-    phone_number: '',
+    slack_user: "",
+    phone_number: "",
   });
 
-  // get data from key holder select 
+  // get data from key holder select
   const fetchData = async () => {
     const url = "http://localhost:3099/data";
     try {
@@ -26,7 +26,7 @@ const CheckIn = () => {
     e.preventDefault();
 
     const { slack_user, phone_number } = postFormData;
-    
+
     if (!slack_user || !phone_number) {
       alert("You must fill all the required fields");
       return;
@@ -51,7 +51,7 @@ const CheckIn = () => {
     });
   };
 
-  // get data from bedford_guest 
+  // get data from bedford_guest
   const guestData = async () => {
     const url = "http://localhost:3099/formData";
     try {
@@ -64,7 +64,7 @@ const CheckIn = () => {
 
   useEffect(() => {
     fetchData();
-    guestData()
+    guestData();
   }, []);
 
   return (
@@ -74,14 +74,14 @@ const CheckIn = () => {
           <h2>
             CheckIn <span className="building-name">Bedford</span> Key Holder
           </h2>
-          {checkInPeople.map((element) => (
-            <select className="checkIn-input" >
-              <option key={element.id}>
-                Select your name
+          <select className="checkIn-input">
+            <option>Select Your Name</option>
+            {checkInPeople.map((element) => (
+              <option className="checkIn-input" key={element.id}>
+                {element.slack_user}
               </option>
-              <option className="checkIn-input">{element.slack_user} </option>
-            </select>
-          ))}
+            ))}
+          </select>
 
           <div className="button-group">
             <button className="checkIn-button">CheckIn</button>
@@ -103,8 +103,8 @@ const CheckIn = () => {
                 placeholder="Enter Name"
                 value={postFormData.slack_user}
                 onChange={handleChange}
-                className="checkIn-input" 
-              required
+                className="checkIn-input"
+                required
               />
             </div>
 
@@ -116,8 +116,8 @@ const CheckIn = () => {
                 placeholder="Enter Phone Number"
                 value={postFormData.phone_number}
                 onChange={handleChange}
-                className="checkIn-input" 
-              required
+                className="checkIn-input"
+                required
               />
             </div>
 
@@ -127,14 +127,14 @@ const CheckIn = () => {
           </form>
 
           <div className="key-holder-section">
-          {getFormData.map((element) => (
-            <select className="checkIn-input" >
-              <option key={element.id}>
-                Select your name
-              </option>
-              <option className="checkIn-input">{element.slack_user} </option>
+            <select className="checkIn-input">
+              <option>Select Your Name</option>
+              {getFormData.map((element) => (
+                <option className="checkIn-input" key={element.id}>
+                  {element.slack_user}{" "}
+                </option>
+              ))}
             </select>
-          ))}
 
             <div className="button-group">
               <button className="checkIn-button">CheckOut</button>
