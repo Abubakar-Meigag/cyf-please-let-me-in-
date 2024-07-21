@@ -6,7 +6,7 @@ const CheckInCititec = () => {
   const [getData, setGetData] = useState([])
 
     // get data from bedford_guest
-    const guestData = async () => {
+    const getCititecData = async () => {
       const url = "http://localhost:3099/getDataForCititec";
       try {
         const response = await axios.get(url);
@@ -17,7 +17,7 @@ const CheckInCititec = () => {
     };
 
     useEffect(() => {
-      guestData()
+      getCititecData()
     }, [])
   
   return (
