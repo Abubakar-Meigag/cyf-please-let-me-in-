@@ -15,17 +15,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 pool.connect();
 
-// Schedule task to truncate the table at 23:59 every day
-cron.schedule('59 23 * * *', async () => {
-  const query = 'TRUNCATE TABLE bedford_guest'
-  try {
-    await pool.query(query);
-    console.log('Table truncated');
-  } catch (err) {
-    console.error('Error truncating table', err);
-  }
-});
-
 app.listen(port, () => {
   console.log(`Server is running on Port: ${port}`);
 });
@@ -38,6 +27,7 @@ const postFormData = require("./endPoint/postFormData");
 const getFormData = require("./endPoint/getFormData");
 const formCheckOut = require("./endPoint/formCheckOut");
 const getDataForCititec = require("./endPoint/cititecData");
+const deleteFormData = require('./endPoint/deleteFormData');
 
 // run the endpoint into the server
 app.get("/data", getData);
@@ -47,3 +37,4 @@ app.post('/submit', postFormData);
 app.get('/formData', getFormData);
 app.put('/formCheckOut', formCheckOut);
 app.get('/getDataForCititec', getDataForCititec);
+app.delete('/delete', deleteFormData);
