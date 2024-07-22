@@ -95,7 +95,7 @@ const CheckInCititec = () => {
           >
             <option>Select Your Name</option>
             {getData.map((element) => (
-              <option className="checkIn-input" key={element.id}>
+              <option className="checkIn-input" key={element.slack_user} value={element.slack_user}>
                 {element.slack_user}{" "}
               </option>
             ))}
