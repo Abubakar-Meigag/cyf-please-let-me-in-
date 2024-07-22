@@ -23,16 +23,16 @@
 CREATE TABLE bedford_keyHolders (
     id SERIAL PRIMARY KEY,
     slack_user VARCHAR(50),
-    phone_number NUMERIC(20),
+    phone_number VARCHAR(20),
     status VARCHAR(4) DEFAULT 'out',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 
 -- table structure for guest help to open door
 CREATE TABLE bedford_guest (
-    id SERIAL PRIMARY KEY,
+    user_id SERIAL PRIMARY KEY,
     slack_user VARCHAR(50),
-    phone_number NUMERIC(20),
+    phone_number VARCHAR(20),
     status VARCHAR(3) DEFAULT 'in',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
@@ -41,7 +41,7 @@ CREATE TABLE bedford_guest (
 CREATE TABLE cititec_keyHolders (
     id SERIAL PRIMARY KEY,
     slack_user VARCHAR(50),
-    phone_number NUMERIC(20),
+    phone_number VARCHAR(20),
     status VARCHAR(4) DEFAULT 'out',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )

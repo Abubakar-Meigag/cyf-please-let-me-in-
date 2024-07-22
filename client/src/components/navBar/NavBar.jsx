@@ -31,6 +31,7 @@ const NavBar = () => {
             <li className="building-item">
               <div className="dropdown-header">
               </div>
+              <ul>
                 <li>
                   <Link to="/bedford/checkIn" className="sub-menu-link">
                     <IoLogInSharp />
@@ -43,6 +44,7 @@ const NavBar = () => {
                     Let Me In
                   </Link>
                 </li>
+              </ul>
             </li>
           </ul>
         </li>
@@ -56,6 +58,7 @@ const NavBar = () => {
             <li className="building-item">
               <div className="dropdown-header">
               </div>
+              <ul>
                 <li>
                   <Link to="/cititec/checkIn" className="sub-menu-link">
                     <IoLogInSharp />
@@ -68,6 +71,7 @@ const NavBar = () => {
                     Let Me In
                   </Link>
                 </li>
+              </ul>
             </li>
           </ul>
         </li>
