@@ -1,13 +1,15 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const cron = require('node-cron');
 
+// create express instance with default configuration 
+const cron = require('node-cron');
 const cors = require("cors");
 const port = process.env.PORT || 3099;
 const pool = require("./database/data");
 const bodyParser = require("body-parser");
 
+// Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());

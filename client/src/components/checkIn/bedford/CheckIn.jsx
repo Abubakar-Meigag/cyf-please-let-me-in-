@@ -5,10 +5,8 @@ import axios from "axios";
 const CheckIn = () => {
   const [checkInPeople, setCheckInPeople] = useState([]);
   const [getFormData, setGetFormData] = useState([]);
-  const [postFormData, setPostFormData] = useState({
-    slack_user: "",
-    phone_number: "",
-  });
+  const [slackUser, setSlackUser] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   // get data from key holder select
   const fetchData = async () => {
@@ -25,30 +23,32 @@ const CheckIn = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    const { slack_user, phone_number } = postFormData;
-
-    if (!slack_user || !phone_number) {
+    if (!slackUser || !phoneNumber) {
       alert("You must fill all the required fields");
       return;
     }
 
-    try {
-      await axios.post("http://localhost:3099/submit", postFormData, {
-        headers: { "Content-Type": "application/json" },
-      });
+    const formData = { slackUser, phoneNumber }
 
-      window.location = "/";
+    try {
+      const response =await fetch(`http://localhost:3099/submit`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json"},
+        body: JSON.stringify(formData)
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error response from server:", errorData); 
+        alert(`Error: ${errorData.message || "Something went wrong!"}`);
+        return;
+      }
+
+
+      window.location = "/bedford/guest";
     } catch (err) {
       console.error(err.message);
     }
-  };
-
-  // on change target for the form
-  const handleChange = (e) => {
-    setPostFormData({
-      ...postFormData,
-      [e.target.name]: e.target.value,
-    });
   };
 
   // get data from bedford_guest
@@ -77,7 +77,7 @@ const CheckIn = () => {
           <select className="checkIn-input">
             <option>Select Your Name</option>
             {checkInPeople.map((element) => (
-              <option className="checkIn-input" key={element.id}>
+              <option className="checkIn-input" key={element.id} >
                 {element.slack_user}
               </option>
             ))}
@@ -101,8 +101,8 @@ const CheckIn = () => {
                 type="text"
                 name="slack_user"
                 placeholder="Enter Name"
-                value={postFormData.slack_user}
-                onChange={handleChange}
+                value={slackUser}
+                onChange={(e) => setSlackUser(e.target.value)}
                 className="checkIn-input"
                 required
               />
@@ -114,14 +114,17 @@ const CheckIn = () => {
                 type="text"
                 name="phone_number"
                 placeholder="Enter Phone Number"
-                value={postFormData.phone_number}
-                onChange={handleChange}
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
                 className="checkIn-input"
                 required
               />
             </div>
 
-            <button className="checkIn-button submit-btn" type="submit">
+            <button 
+                className="checkIn-button submit-btn"
+                type="submit"
+            >
               Submit
             </button>
           </form>
@@ -130,14 +133,16 @@ const CheckIn = () => {
             <select className="checkIn-input">
               <option>Select Your Name</option>
               {getFormData.map((element) => (
-                <option className="checkIn-input" key={element.id}>
+                <option className="checkIn-input" key={element.id} >
                   {element.slack_user}{" "}
                 </option>
               ))}
             </select>
 
             <div className="button-group">
-              <button className="checkIn-button">CheckOut</button>
+              <button className="checkIn-button">
+                CheckOut
+              </button>
             </div>
           </div>
         </div>
