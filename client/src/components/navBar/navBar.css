@@ -67,6 +67,11 @@
   position: relative;
 }
 
+.dropdown-menu li ul li {
+  list-style-type: none;
+  font-size: 20px;
+}
+
 .dropdown-header {
   display: flex;
   align-items: center;

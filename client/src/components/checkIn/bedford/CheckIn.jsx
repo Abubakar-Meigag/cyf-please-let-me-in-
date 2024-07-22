@@ -7,6 +7,9 @@ const CheckIn = () => {
   const [getFormData, setGetFormData] = useState([]);
   const [slackUser, setSlackUser] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [status, setStatus] = useState({});
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
   // get data from key holder select
   const fetchData = async () => {
@@ -14,6 +17,12 @@ const CheckIn = () => {
     try {
       const response = await axios.get(url);
       setCheckInPeople(response.data);
+
+      const initialStatus = response.data.reduce((acc, user) => {
+        acc[user.slack_user] = user.status;
+        return acc;
+      }, {});
+      setStatus(initialStatus);
     } catch (error) {
       console.error("Error fetching modules:", error);
     }
@@ -56,6 +65,13 @@ const CheckIn = () => {
     try {
       const response = await axios.get(url);
       setGetFormData(response.data);
+
+      const initialStatus = response.data.reduce((acc, user) => {
+        acc[user.slack_user] = user.status;
+        return acc;
+      }, {});
+      setStatus(initialStatus);
+
     } catch (error) {
       console.error("Error fetching modules:", error);
     }
@@ -66,6 +82,82 @@ const CheckIn = () => {
     guestData();
   }, []);
 
+  // check in key holder 
+  const checkMeIn = async () => {
+    const url = "http://localhost:3099/checkIn"
+    const body = { slack_user: slackUser}
+
+    if (!slackUser) {
+      alert ('Please select your slack name')
+      return;
+    }
+
+    try {
+      const res = await axios.put(url, body);
+      if ( res.status === 200) {
+        setStatus((prevStatus) => ({
+          ...prevStatus,
+          [slackUser] : "in",
+        }));
+        setSuccess(res.data.error);
+        setError(null);
+      }
+    } catch (err) {
+      setError(err.response ? err.response.data.error : "Internal server error");
+      setSuccess(null);
+    }
+  }
+
+  // check out key holder
+  const checkMeOut = async () => {
+    const url = "http://localhost:3099/checkOut"
+    const body = { slack_user: slackUser}
+
+    if (!slackUser) {
+      alert ('Please select your slack name')
+      return;
+    }
+
+    try {
+      const res = await axios.put(url, body);
+      if ( res.status === 200) {
+        setStatus((prevStatus) => ({
+          ...prevStatus,
+          [slackUser] : "out",
+        }));
+        setSuccess(res.data.error);
+        setError(null);
+      }
+    } catch (err) {
+      setError(err.response ? err.response.data.error : "Internal server error");
+      setSuccess(null);
+    }
+  }
+
+  // check out non key holder 
+  const guestCheckOut = async () => {
+    const url = "http://localhost:3099/formCheckOut"
+    const boyd = { slack_user: slackUser }
+
+    if (!slackUser) {
+      alert('please select a your slack user..!!!')
+      return;
+    }
+
+    try {
+      const res = await axios.put(url, boyd);
+      if (res.status === 200) {
+        setStatus((prevStatus) => ({
+          ...prevStatus,
+          [slackUser]: "out",
+        }))
+      }
+    } catch (err) {
+      setError(err.response ? err.response.data.error : "Internal server error");
+      setSuccess(null);
+    }
+  }
+
   return (
     <div className="checkIn-container">
       <div className="checkIn-content">
@@ -73,19 +165,39 @@ const CheckIn = () => {
           <h2>
             CheckIn <span className="building-name">Bedford</span> Key Holder
           </h2>
-          <select className="checkIn-input">
-            <option>Select Your Name</option>
+          <select 
+              className="checkIn-input"
+              value={slackUser}
+              onChange={(e) => setSlackUser(e.target.value)}
+          >
+            <option value="">Select Your Name</option>
             {checkInPeople.map((element, index) => (
-              <option className="checkIn-input" key={index}>
+              <option className="checkIn-input" key={element.slack_user} value={element.slack_user}>
                 {element.slack_user}
               </option>
             ))}
           </select>
 
           <div className="button-group">
-            <button className="checkIn-button">CheckIn</button>
-            <button className="checkIn-button">CheckOut</button>
+            <button 
+              className="checkIn-button"
+              onClick={checkMeIn}
+              disabled={status[slackUser] === "in"}
+            >
+                CheckIn
+            </button>
+
+            <button
+              className="checkIn-button"
+              onClick={checkMeOut}
+              disabled={status[slackUser] === "out"}
+            >
+              Check Out
+            </button>
           </div>
+
+          {success && <div className="message success">{success}</div>}
+          {error && <div className="message error">{error}</div>}
 
           <hr />
         </div>
@@ -126,18 +238,32 @@ const CheckIn = () => {
           </form>
 
           <div className="key-holder-section">
-            <select className="checkIn-input">
+            <select 
+              className="checkIn-input"
+              value={slackUser}
+              onChange={(e) => setSlackUser(e.target.value)}
+            >
               <option>Select Your Name</option>
               {getFormData.map((element, index) => (
-                <option className="checkIn-input" key={index}>
+                <option className="checkIn-input" key={element.slack_user} value={element.slack_user}>
                   {element.slack_user}
                 </option>
               ))}
             </select>
 
             <div className="button-group">
-              <button className="checkIn-button">CheckOut</button>
+              <button 
+                  className="checkIn-button"
+                  onClick={guestCheckOut}
+                  disabled={status[slackUser] === "out"}              
+              >
+                CheckOut
+              </button>
             </div>
+
+            {success && <div className="message success">{success}</div>}
+            {error && <div className="message error">{error}</div>}
+
           </div>
         </div>
       </div>
