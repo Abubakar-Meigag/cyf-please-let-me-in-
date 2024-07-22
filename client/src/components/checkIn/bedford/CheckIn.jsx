@@ -152,11 +152,40 @@ const CheckIn = () => {
           [slackUser]: "out",
         }))
       }
+
+      // to invoke delete function after checkout is successful
+       await deleteFormUser();
+
     } catch (err) {
       setError(err.response ? err.response.data.error : "Internal server error");
       setSuccess(null);
     }
   }
+
+  const deleteFormUser = async () => {
+    const url = "http://localhost:3099/delete";
+    const body = { slackUser };
+  
+    if (!slackUser) {
+      alert("Please select a Slack user.");
+      return;
+    }
+  
+    try {
+      const res = await axios.delete(url, { data: body });
+      if (res.status === 200) {
+        setSuccess("Data deleted successfully.");
+        setError(null);
+        
+        fetchData();  
+        guestData();  
+      }
+    } catch (err) {
+      setError(err.response ? err.response.data.error : "Internal server error");
+      setSuccess(null);
+    }
+  };
+  
 
   return (
     <div className="checkIn-container">
