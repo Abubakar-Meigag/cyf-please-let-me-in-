@@ -10,6 +10,7 @@ const CheckIn = () => {
   const [status, setStatus] = useState({});
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [guestUserStatus, setGuestUserStatus] = useState({})
 
   // get data from key holder select
   const fetchData = async () => {
@@ -70,7 +71,7 @@ const CheckIn = () => {
         acc[user.slack_user] = user.status;
         return acc;
       }, {});
-      setStatus(initialStatus);
+      setGuestUserStatus(initialStatus);
 
     } catch (error) {
       console.error("Error fetching modules:", error);
@@ -151,7 +152,7 @@ const CheckIn = () => {
     try {
       const res = await axios.put(url, boyd);
       if (res.status === 200) {
-        setStatus((prevStatus) => ({
+        setGuestUserStatus((prevStatus) => ({
           ...prevStatus,
           [slackUser]: "out",
         }))
@@ -189,6 +190,14 @@ const CheckIn = () => {
       setSuccess(null);
     }
   };
+
+  const toggleCheckInOut = () => {
+    if (status[slackUser] === "in") {
+      checkMeOut();
+    } else {
+      checkMeIn();
+    }
+  };
   
 
   return (
@@ -212,20 +221,12 @@ const CheckIn = () => {
           </select>
 
           <div className="button-group">
-            <button 
-              className="checkIn-button"
-              onClick={checkMeIn}
-              disabled={status[slackUser] === "in"}
-            >
-                CheckIn
-            </button>
-
             <button
               className="checkIn-button"
-              onClick={checkMeOut}
-              disabled={status[slackUser] === "out"}
+              onClick={toggleCheckInOut}
+              style={{ backgroundColor: status[slackUser] === "in" ? "red" : "blue" }}
             >
-              Check Out
+              {status[slackUser] === "in" ? "Check Out" : "Check In"}
             </button>
           </div>
 
@@ -288,7 +289,7 @@ const CheckIn = () => {
               <button 
                   className="checkIn-button"
                   onClick={guestCheckOut}
-                  disabled={status[slackUser] === "out"}              
+                  disabled={guestUserStatus[slackUser] === "out"}              
               >
                 CheckOut
               </button>
