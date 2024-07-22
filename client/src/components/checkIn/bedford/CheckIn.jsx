@@ -102,6 +102,8 @@ const CheckIn = () => {
         setSuccess(res.data.error);
         setError(null);
       }
+
+      window.location = "/bedford/guest";
     } catch (err) {
       setError(err.response ? err.response.data.error : "Internal server error");
       setSuccess(null);
@@ -128,6 +130,8 @@ const CheckIn = () => {
         setSuccess(res.data.error);
         setError(null);
       }
+
+      window.location = "/bedford/guest";
     } catch (err) {
       setError(err.response ? err.response.data.error : "Internal server error");
       setSuccess(null);
@@ -155,7 +159,7 @@ const CheckIn = () => {
 
       // to invoke delete function after checkout is successful
        await deleteFormUser();
-
+       window.location = "/bedford/guest";
     } catch (err) {
       setError(err.response ? err.response.data.error : "Internal server error");
       setSuccess(null);
