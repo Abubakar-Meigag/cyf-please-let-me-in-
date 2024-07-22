@@ -28,22 +28,21 @@ const CheckIn = () => {
       return;
     }
 
-    const formData = { slackUser, phoneNumber }
+    const formData = { slackUser, phoneNumber };
 
     try {
-      const response =await fetch(`http://localhost:3099/submit`, {
+      const response = await fetch(`http://localhost:3099/submit`, {
         method: "POST",
-        headers: { "Content-Type": "application/json"},
-        body: JSON.stringify(formData)
-      })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.error("Error response from server:", errorData); 
+        console.error("Error response from server:", errorData);
         alert(`Error: ${errorData.message || "Something went wrong!"}`);
         return;
       }
-
 
       window.location = "/bedford/guest";
     } catch (err) {
@@ -76,8 +75,8 @@ const CheckIn = () => {
           </h2>
           <select className="checkIn-input">
             <option>Select Your Name</option>
-            {checkInPeople.map((element) => (
-              <option className="checkIn-input" key={element.id} >
+            {checkInPeople.map((element, index) => (
+              <option className="checkIn-input" key={index}>
                 {element.slack_user}
               </option>
             ))}
@@ -121,10 +120,7 @@ const CheckIn = () => {
               />
             </div>
 
-            <button 
-                className="checkIn-button submit-btn"
-                type="submit"
-            >
+            <button className="checkIn-button submit-btn" type="submit">
               Submit
             </button>
           </form>
@@ -132,17 +128,15 @@ const CheckIn = () => {
           <div className="key-holder-section">
             <select className="checkIn-input">
               <option>Select Your Name</option>
-              {getFormData.map((element) => (
-                <option className="checkIn-input" key={element.id} >
-                  {element.slack_user}{" "}
+              {getFormData.map((element, index) => (
+                <option className="checkIn-input" key={index}>
+                  {element.slack_user}
                 </option>
               ))}
             </select>
 
             <div className="button-group">
-              <button className="checkIn-button">
-                CheckOut
-              </button>
+              <button className="checkIn-button">CheckOut</button>
             </div>
           </div>
         </div>
