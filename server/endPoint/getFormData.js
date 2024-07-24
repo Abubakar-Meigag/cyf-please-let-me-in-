@@ -11,7 +11,6 @@ const getFormData = async (req, res) => {
       result: "failure",
       message: "No data found",
     });
-    pool.end();
   }
 };
 

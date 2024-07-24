@@ -1,0 +1,73 @@
+/* Basic styles for the container */
+.cititec-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      /* font-family: Arial, sans-serif; */
+    }
+    
+    .cititec-title {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+    
+    .cititec-building-name {
+      color: #007bff;
+    }
+    
+    /* Styles for the table */
+    .cititec-table-container {
+      width: 100%;
+      max-width: 800px; /* Adjust as needed */
+    }
+    
+    .cititec-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 auto;
+      font-size: 30px;
+    }
+    
+    .cititec-table th,
+    .cititec-table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    
+    .cititec-table th {
+      background-color: #f4f4f4;
+    }
+    
+    /* Make the icon smaller */
+    .cititec-call-icon {
+      font-size: 1.2em;
+      color: #007bff;
+      text-decoration: none;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 600px) {
+      .cititec-table {
+        font-size: 1.3em;
+      }
+    
+      .cititec-table th,
+      .cititec-table td {
+        padding: 5px;
+      }
+    
+      .cititec-call-icon {
+        font-size: 1em;
+      }
+    }
+    
+    @media (min-width: 601px) {
+      .cititec-table th,
+      .cititec-table td {
+        padding: 10px;
+      }
+    }
+    
