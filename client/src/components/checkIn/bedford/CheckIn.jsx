@@ -12,6 +12,9 @@ const CheckIn = () => {
   const [success, setSuccess] = useState(null);
   const [guestUserStatus, setGuestUserStatus] = useState({})
 
+  const [keyHolderSlackUser, setKeyHolderSlackUser] = useState("");
+  const [guestSlackUser, setGuestSlackUser] = useState("");
+
   // get data from key holder select
   const fetchData = async () => {
     const url = "http://localhost:3099/data";
@@ -86,9 +89,9 @@ const CheckIn = () => {
   // check in key holder 
   const checkMeIn = async () => {
     const url = "http://localhost:3099/checkIn"
-    const body = { slack_user: slackUser}
+    const body = { slack_user: keyHolderSlackUser }
 
-    if (!slackUser) {
+    if (!keyHolderSlackUser) {
       alert ('Please select your slack name')
       return;
     }
@@ -98,7 +101,7 @@ const CheckIn = () => {
       if ( res.status === 200) {
         setStatus((prevStatus) => ({
           ...prevStatus,
-          [slackUser] : "in",
+          [keyHolderSlackUser] : "in",
         }));
         setSuccess(res.data.error);
         setError(null);
@@ -114,9 +117,9 @@ const CheckIn = () => {
   // check out key holder
   const checkMeOut = async () => {
     const url = "http://localhost:3099/checkOut"
-    const body = { slack_user: slackUser}
+    const body = { slack_user: keyHolderSlackUser}
 
-    if (!slackUser) {
+    if (!keyHolderSlackUser) {
       alert ('Please select your slack name')
       return;
     }
@@ -126,13 +129,13 @@ const CheckIn = () => {
       if ( res.status === 200) {
         setStatus((prevStatus) => ({
           ...prevStatus,
-          [slackUser] : "out",
+          [keyHolderSlackUser] : "out",
         }));
         setSuccess(res.data.error);
         setError(null);
       }
 
-      window.location = "/bedford/guest";
+      window.location = "/";
     } catch (err) {
       setError(err.response ? err.response.data.error : "Internal server error");
       setSuccess(null);
@@ -142,9 +145,9 @@ const CheckIn = () => {
   // check out non key holder 
   const guestCheckOut = async () => {
     const url = "http://localhost:3099/formCheckOut"
-    const boyd = { slack_user: slackUser }
+    const boyd = { slack_user: guestSlackUser }
 
-    if (!slackUser) {
+    if (!guestSlackUser) {
       alert('please select a your slack user..!!!')
       return;
     }
@@ -154,7 +157,7 @@ const CheckIn = () => {
       if (res.status === 200) {
         setGuestUserStatus((prevStatus) => ({
           ...prevStatus,
-          [slackUser]: "out",
+          [guestSlackUser]: "out",
         }))
       }
 
@@ -169,9 +172,9 @@ const CheckIn = () => {
 
   const deleteFormUser = async () => {
     const url = "http://localhost:3099/delete";
-    const body = { slackUser };
+    const body = { slack_user: guestSlackUser };
   
-    if (!slackUser) {
+    if (!guestSlackUser) {
       alert("Please select a Slack user.");
       return;
     }
@@ -192,7 +195,7 @@ const CheckIn = () => {
   };
 
   const toggleCheckInOut = () => {
-    if (status[slackUser] === "in") {
+    if (status[keyHolderSlackUser] === "in") {
       checkMeOut();
     } else {
       checkMeIn();
@@ -209,8 +212,8 @@ const CheckIn = () => {
           </h2>
           <select 
               className="checkIn-input"
-              value={slackUser}
-              onChange={(e) => setSlackUser(e.target.value)}
+              value={keyHolderSlackUser}
+              onChange={(e) => setKeyHolderSlackUser(e.target.value)}
           >
             <option value="">Select Your Name</option>
             {checkInPeople.map((element, index) => (
@@ -224,9 +227,9 @@ const CheckIn = () => {
             <button
               className="checkIn-button"
               onClick={toggleCheckInOut}
-              style={{ backgroundColor: status[slackUser] === "in" ? "red" : "blue" }}
+              style={{ backgroundColor: status[keyHolderSlackUser] === "in" ? "red" : "blue" }}
             >
-              {status[slackUser] === "in" ? "Check Out" : "Check In"}
+              {status[keyHolderSlackUser] === "in" ? "Check Out" : "Check In"}
             </button>
           </div>
 
@@ -274,8 +277,8 @@ const CheckIn = () => {
           <div className="key-holder-section">
             <select 
               className="checkIn-input"
-              value={slackUser}
-              onChange={(e) => setSlackUser(e.target.value)}
+              value={guestSlackUser}
+              onChange={(e) => setGuestSlackUser(e.target.value)}
             >
               <option>Select Your Name</option>
               {getFormData.map((element, index) => (
@@ -289,7 +292,7 @@ const CheckIn = () => {
               <button 
                   className="checkIn-button"
                   onClick={guestCheckOut}
-                  disabled={guestUserStatus[slackUser] === "out"}              
+                  disabled={guestUserStatus[guestSlackUser] === "out"}              
               >
                 CheckOut
               </button>
