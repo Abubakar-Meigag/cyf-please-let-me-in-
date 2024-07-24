@@ -22,11 +22,14 @@ const CheckIn = () => {
       const response = await axios.get(url);
       setCheckInPeople(response.data);
 
-      const initialStatus = response.data.reduce((acc, user) => {
-        acc[user.slack_user] = user.status;
-        return acc;
-      }, {});
+      const initialStatus = {};
+      response.data.forEach(user => {
+        if (user && user.slack_user) {
+          initialStatus[user.slack_user] = user.status;
+        }
+      });
       setStatus(initialStatus);
+      
     } catch (error) {
       console.error("Error fetching modules:", error);
     }
@@ -70,11 +73,13 @@ const CheckIn = () => {
       const response = await axios.get(url);
       setGetFormData(response.data);
 
-      const initialStatus = response.data.reduce((acc, user) => {
-        acc[user.slack_user] = user.status;
-        return acc;
-      }, {});
-      setGuestUserStatus(initialStatus);
+      const initialStatus = {};
+      response.data.forEach(user => {
+        if (user && user.slack_user) {
+          initialStatus[user.slack_user] = user.status;
+        }
+      });
+      setGuestUserStatus(initialStatus);      
 
     } catch (error) {
       console.error("Error fetching modules:", error);
