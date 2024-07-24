@@ -1,14 +1,14 @@
 const pool = require("../database/data");
 
 const deleteFormData = async (req, res) => {
-  const { slackUser } = req.body;
+  const { slack_user } = req.body;
 
-  if (!slackUser) {
+  if (!slack_user) {
     return res.status(400).json({ error: "Slack user is required" });
   }
 
   const deleteQuery = "DELETE FROM bedford_guest WHERE slack_user = $1 RETURNING *";
-  const values = [slackUser];
+  const values = [slack_user];
 
   try {
     const result = await pool.query(deleteQuery, values);
