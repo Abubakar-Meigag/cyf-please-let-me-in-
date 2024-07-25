@@ -47,6 +47,23 @@
       color: #007bff;
       text-decoration: none;
     }
+
+    .loading-class {
+      color: blue;
+      font-size: 70px;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 60px;
+
+    }
+    
+    .error-class {
+      color: red;
+      font-size: 70px;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 60px;
+    }
     
     /* Responsive design */
     @media (max-width: 600px) {

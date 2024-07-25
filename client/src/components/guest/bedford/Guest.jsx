@@ -4,22 +4,32 @@ import "./guest.css";
 
 function Guest() {
   const [keyHolder, setKeyHolder] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const fetchData = async () => {
-    const keyHolderData = await axios.get(`https://cyf-please-let-me-in.onrender.com/data`);
-    const guestData = await axios.get(`https://cyf-please-let-me-in.onrender.com/formData`);
-
+    
     try {
+      const keyHolderData = await axios.get(`https://cyf-please-let-me-in.onrender.com/data`);
+      const guestData = await axios.get(`https://cyf-please-let-me-in.onrender.com/formData`);
+
       const collectData = [...keyHolderData.data, ...guestData.data];
       setKeyHolder(collectData);
+      setLoading(false);
+      
     } catch (error) {
       console.error("Error fetching data:", error);
+      setError(error);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  if (loading) return <div className="loading-class">Loading....!!</div>;
+  if (error) return <div className="error-class">Error....!!</div>;
 
   return (
     <div className="guest-container">

@@ -4,6 +4,8 @@ import "./guestCititec.css";
 
 function GuestCititec() {
   const [keyHolder, setKeyHolder] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const fetchData = async () => {
     const url = `https://cyf-please-let-me-in.onrender.com/getDataForCititec`;
@@ -12,14 +14,21 @@ function GuestCititec() {
       const responses = await axios.get(url);
       const data = responses.data;
       setKeyHolder(data);
+      setLoading(false);
+
     } catch (error) {
       console.error("Error fetching data:", error);
+      setError(error);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  if (loading) return <div className="loading-class">Loading....!!</div>;
+  if (error) return <div className="error-class">Error....!!</div>;
 
   return (
     <div className="cititec-container">
