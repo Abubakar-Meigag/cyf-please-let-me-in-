@@ -169,7 +169,7 @@ const CheckIn = () => {
 
       // to invoke delete function after checkout is successful
        await deleteFormUser();
-       window.location = "/bedford/guest";
+       window.location = "/";
     } catch (err) {
       setError(err.response ? err.response.data.error : "Internal server error");
       setSuccess(null);
