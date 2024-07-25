@@ -3,7 +3,6 @@ const express = require("express");
 const app = express();
 
 // create express instance with default configuration
-const cron = require("node-cron");
 const cors = require("cors");
 const port = process.env.PORT || 3099;
 const pool = require("./database/data");
