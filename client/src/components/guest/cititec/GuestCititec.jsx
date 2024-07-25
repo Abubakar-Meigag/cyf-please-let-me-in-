@@ -6,7 +6,7 @@ function GuestCititec() {
   const [keyHolder, setKeyHolder] = useState([]);
 
   const fetchData = async () => {
-    const url = "http://localhost:3099/getDataForCititec";
+    const url = `https://cyf-please-let-me-in.onrender.com/getDataForCititec`;
 
     try {
       const responses = await axios.get(url);

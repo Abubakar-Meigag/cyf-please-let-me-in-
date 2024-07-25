@@ -11,7 +11,8 @@ const CheckInCititec = () => {
 
   // get data from bedford_guest
   const getCititecData = async () => {
-    const url = "http://localhost:3099/getDataForCititec";
+    const url =`https://cyf-please-let-me-in.onrender.com/getDataForCititec`
+
     try {
       const response = await axios.get(url);
       setGetData(response.data);
@@ -25,7 +26,8 @@ const CheckInCititec = () => {
   }, []);
 
   const checkMeIn = async () => {
-    const url = "http://localhost:3099/checkInCititec";
+    const url = `https://cyf-please-let-me-in.onrender.com/checkInCititec`;
+
     const body = { slack_user: slackUser };
 
     if (!slackUser) {

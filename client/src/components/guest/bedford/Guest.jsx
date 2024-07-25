@@ -6,8 +6,8 @@ function Guest() {
   const [keyHolder, setKeyHolder] = useState([]);
 
   const fetchData = async () => {
-    const keyHolderData = await axios.get("http://localhost:3099/data");
-    const guestData = await axios.get("http://localhost:3099/formData");
+    const keyHolderData = await axios.get(`https://cyf-please-let-me-in.onrender.com/data`);
+    const guestData = await axios.get(`https://cyf-please-let-me-in.onrender.com/formData`);
 
     try {
       const collectData = [...keyHolderData.data, ...guestData.data];
