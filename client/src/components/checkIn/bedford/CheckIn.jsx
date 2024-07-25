@@ -112,7 +112,7 @@ const CheckIn = () => {
         setError(null);
       }
 
-      window.location = "/bedford/guest";
+      alert(`Good morning ${keyHolderSlackUser} you have Check IN successfully`)
     } catch (err) {
       setError(err.response ? err.response.data.error : "Internal server error");
       setSuccess(null);
