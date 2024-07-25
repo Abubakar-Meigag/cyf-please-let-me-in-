@@ -60,7 +60,7 @@ const CheckIn = () => {
         return;
       }
 
-      alert(` Hey ${slackUser} you now Check In successfully`)
+      alert(` Hey "${slackUser}", you have now Checked In successfully!`)
       window.location = "/";
     } catch (err) {
       console.error(err.message);
@@ -113,7 +113,7 @@ const CheckIn = () => {
         setError(null);
       }
 
-      alert(`Good morning ${keyHolderSlackUser} you have Check IN successfully`)
+      alert(`Good morning "${keyHolderSlackUser}", you have now Checked In successfully!`)
     } catch (err) {
       setError(err.response ? err.response.data.error : "Internal server error");
       setSuccess(null);
