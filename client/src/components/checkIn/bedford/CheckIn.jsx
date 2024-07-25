@@ -60,7 +60,8 @@ const CheckIn = () => {
         return;
       }
 
-      window.location = "/bedford/guest";
+      alert(` Hey ${slackUser} you now Check In successfully`)
+      window.location = "/";
     } catch (err) {
       console.error(err.message);
     }
