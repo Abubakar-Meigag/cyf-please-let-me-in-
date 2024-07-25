@@ -43,8 +43,8 @@ const CheckInCititec = () => {
           [slackUser]: "in",
         }));
       }
-
-      window.location = "/cititec/guest";
+      alert(`Hey "${slackUser}", you have now Checked In successfully!`)
+      window.location = "/";
     } catch (err) {
       setError(
         err.response ? err.response.data.error : "Internal server error"
@@ -73,7 +73,8 @@ const CheckInCititec = () => {
         setError(null);
       }
 
-      window.location = "/cititec/guest";
+      alert(`Hey "${slackUser}", you have now Checked Out successfully!`)
+      window.location = "/";
     } catch (err) {
       setError(
         err.response ? err.response.data.error : "Internal server error"
