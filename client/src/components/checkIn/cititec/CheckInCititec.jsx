@@ -54,7 +54,7 @@ const CheckInCititec = () => {
   };
 
   const checkMeOut = async () => {
-    const url = "http://localhost:3099/checkOutCititec";
+    const url = "https://cyf-please-let-me-in.onrender.com/checkOutCititec";
     const body = { slack_user: slackUser };
 
     if (!slackUser) {
