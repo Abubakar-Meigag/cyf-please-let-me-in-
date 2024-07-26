@@ -1,6 +1,7 @@
 import "./checkIn.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const CheckIn = () => {
   const [checkInPeople, setCheckInPeople] = useState([]);
@@ -40,7 +41,7 @@ const CheckIn = () => {
     e.preventDefault();
 
     if (!slackUser || !phoneNumber) {
-      alert("You must fill all the required fields");
+      toast.error("You must fill all the required fields");
       return;
     }
 
@@ -56,15 +57,19 @@ const CheckIn = () => {
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Error response from server:", errorData);
-        alert(`Error: ${errorData.message || "Something went wrong!"}`);
+        toast.error(`Error: ${errorData.message || "Something went wrong!"}`);
         return;
       }
 
-      alert(` Hey "${slackUser}", you have now Checked In successfully!`)
-      window.location = "/";
+      toast.success(` Hey "${slackUser}" Welcome back, you have now Checked In successfully!`);
     } catch (err) {
       console.error(err.message);
+      toast.error(err.message);
     }
+
+    setSlackUser("");
+    setPhoneNumber("");
+    guestData()
   };
 
   // get data from bedford_guest
@@ -98,7 +103,7 @@ const CheckIn = () => {
     const body = { slack_user: keyHolderSlackUser }
 
     if (!keyHolderSlackUser) {
-      alert ('Please select your slack name')
+      toast.error('Please select your slack name')
       return;
     }
 
@@ -113,11 +118,13 @@ const CheckIn = () => {
         setError(null);
       }
 
-      alert(`Good morning "${keyHolderSlackUser}", you have now Checked In successfully!`)
+      toast.success(`Hey "${keyHolderSlackUser}" Welcome back, you have now Checked In successfully!`);
     } catch (err) {
       setError(err.response ? err.response.data.error : "Internal server error");
       setSuccess(null);
     }
+
+    setKeyHolderSlackUser("")
   }
 
   // check out key holder
@@ -126,7 +133,7 @@ const CheckIn = () => {
     const body = { slack_user: keyHolderSlackUser}
 
     if (!keyHolderSlackUser) {
-      alert ('Please select your slack name')
+      toast.error('Please select your slack name')
       return;
     }
 
@@ -141,7 +148,7 @@ const CheckIn = () => {
         setError(null);
       }
 
-      window.location = "/";
+      toast.success(`Hey "${keyHolderSlackUser}", you have now Checked out successfully!`)
     } catch (err) {
       setError(err.response ? err.response.data.error : "Internal server error");
       setSuccess(null);
@@ -154,7 +161,7 @@ const CheckIn = () => {
     const boyd = { slack_user: guestSlackUser }
 
     if (!guestSlackUser) {
-      alert('please select a your slack user..!!!')
+      toast.error('please select a your slack user..!!!')
       return;
     }
 
@@ -169,7 +176,7 @@ const CheckIn = () => {
 
       // to invoke delete function after checkout is successful
        await deleteFormUser();
-       window.location = "/";
+       toast.success(`Hey "${guestSlackUser}", you have now Checked out successfully!`)
     } catch (err) {
       setError(err.response ? err.response.data.error : "Internal server error");
       setSuccess(null);
@@ -181,7 +188,7 @@ const CheckIn = () => {
     const body = { slack_user: guestSlackUser };
   
     if (!guestSlackUser) {
-      alert("Please select a Slack user.");
+      toast.error("Please select a Slack user.");
       return;
     }
   

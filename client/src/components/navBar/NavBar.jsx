@@ -33,7 +33,7 @@ const NavBar = () => {
                 <li>
                   <Link to="/bedford/checkIn" className="sub-menu-link">
                     <IoLogInSharp />
-                    Check-In
+                    Check In/Out
                   </Link>
                 </li>
                 <li>
@@ -58,7 +58,7 @@ const NavBar = () => {
                 <li>
                   <Link to="/cititec/checkIn" className="sub-menu-link">
                     <IoLogInSharp />
-                    Check-In
+                    Check In/Out
                   </Link>
                 </li>
                 <li>

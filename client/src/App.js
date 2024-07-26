@@ -7,12 +7,14 @@ import Home from "./components/home/Home";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NavBar from "./components/navBar/NavBar";
 import GuestCtititec from "./components/guest/cititec/GuestCititec";
+import ToasterProvider from "./components/toaster/ToasterProvider";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <NavBar />
+        <ToasterProvider />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="cititec" element={<Home />} />
