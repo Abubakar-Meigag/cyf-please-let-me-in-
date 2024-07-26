@@ -1,6 +1,7 @@
 import axios from "axios";
 import "./checkIn.css";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const CheckInCititec = () => {
   const [getData, setGetData] = useState([]);
@@ -31,7 +32,7 @@ const CheckInCititec = () => {
     const body = { slack_user: slackUser };
 
     if (!slackUser) {
-      alert("Please select your slack name");
+      toast.error("Please select your slack name");
       return;
     }
 
@@ -43,8 +44,7 @@ const CheckInCititec = () => {
           [slackUser]: "in",
         }));
       }
-      alert(`Hey "${slackUser}", you have now Checked In successfully!`)
-      window.location = "/";
+      toast.success(` Hey "${slackUser}" Welcome back, you have now Checked In successfully!`);
     } catch (err) {
       setError(
         err.response ? err.response.data.error : "Internal server error"
@@ -58,7 +58,7 @@ const CheckInCititec = () => {
     const body = { slack_user: slackUser };
 
     if (!slackUser) {
-      alert("Please select your slack name");
+      toast.error("Please select your slack name");
       return;
     }
 
@@ -73,8 +73,7 @@ const CheckInCititec = () => {
         setError(null);
       }
 
-      alert(`Hey "${slackUser}", you have now Checked Out successfully!`)
-      window.location = "/";
+      toast.success(` Hey "${slackUser}", you have now Checked out successfully!`);
     } catch (err) {
       setError(
         err.response ? err.response.data.error : "Internal server error"

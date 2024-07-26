@@ -12,7 +12,7 @@ function Home() {
         <>
           <h2 className="home-title">{building.charAt(0).toUpperCase() + building.slice(1)}</h2>
           <div className="button-container">
-            <Link className="home-button" to={`/${building}/checkIn`}>Check In</Link>
+            <Link className="home-button" to={`/${building}/checkIn`}>Check In/Out</Link>
             <Link className="home-button" to={`/${building}/guest`}>Let Me In</Link>
           </div>
         </>
