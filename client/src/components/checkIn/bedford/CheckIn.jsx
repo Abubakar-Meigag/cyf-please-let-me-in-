@@ -272,7 +272,7 @@ const CheckIn = () => {
             <div className="form-group">
               <label>Phone Number</label>
               <input
-                type="text"
+                type="number"
                 name="phone_number"
                 placeholder="Enter Phone Number"
                 value={phoneNumber}
