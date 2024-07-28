@@ -1,22 +1,16 @@
 import "./checkIn.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import toast from "react-hot-toast";
+import KeyHolderCheckIn from "./KeyHolderCheckIn";
+import NonKeyHolderCheckIn from "./NonKeyHolderCheckIn";
+import GuestCheckOut from "./GuestCheckOut";
 
 const CheckIn = () => {
   const [checkInPeople, setCheckInPeople] = useState([]);
   const [getFormData, setGetFormData] = useState([]);
-  const [slackUser, setSlackUser] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
   const [status, setStatus] = useState({});
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
-  const [guestUserStatus, setGuestUserStatus] = useState({})
+  const [guestUserStatus, setGuestUserStatus] = useState({});
 
-  const [keyHolderSlackUser, setKeyHolderSlackUser] = useState("");
-  const [guestSlackUser, setGuestSlackUser] = useState("");
-
-  // get data from key holder select
   const fetchData = async () => {
     const url = `https://cyf-please-let-me-in.onrender.com/data`;
     try {
@@ -36,43 +30,6 @@ const CheckIn = () => {
     }
   };
 
-  // post data from the form to bedford_guest database
-  const onSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!slackUser || !phoneNumber) {
-      toast.error("You must fill all the required fields");
-      return;
-    }
-
-    const formData = { slackUser, phoneNumber };
-
-    try {
-      const response = await fetch(`https://cyf-please-let-me-in.onrender.com/submit`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Error response from server:", errorData);
-        toast.error(`Error: ${errorData.message || "Something went wrong!"}`);
-        return;
-      }
-
-      toast.success(` Hey "${slackUser}" Welcome back, you have now Checked In successfully!`);
-    } catch (err) {
-      console.error(err.message);
-      toast.error(err.message);
-    }
-
-    setSlackUser("");
-    setPhoneNumber("");
-    guestData()
-  };
-
-  // get data from bedford_guest
   const guestData = async () => {
     const url = `https://cyf-please-let-me-in.onrender.com/formData`;
     try {
@@ -97,225 +54,21 @@ const CheckIn = () => {
     guestData();
   }, []);
 
-  // check in key holder 
-  const checkMeIn = async () => {
-    const url = `https://cyf-please-let-me-in.onrender.com/checkIn`;
-    const body = { slack_user: keyHolderSlackUser }
-
-    if (!keyHolderSlackUser) {
-      toast.error('Please select your slack name')
-      return;
-    }
-
-    try {
-      const res = await axios.put(url, body);
-      if ( res.status === 200) {
-        setStatus((prevStatus) => ({
-          ...prevStatus,
-          [keyHolderSlackUser] : "in",
-        }));
-        setSuccess(res.data.error);
-        setError(null);
-      }
-
-      toast.success(`Hey "${keyHolderSlackUser}" Welcome back, you have now Checked In successfully!`);
-    } catch (err) {
-      setError(err.response ? err.response.data.error : "Internal server error");
-      setSuccess(null);
-    }
-
-    setKeyHolderSlackUser("")
-  }
-
-  // check out key holder
-  const checkMeOut = async () => {
-    const url = `https://cyf-please-let-me-in.onrender.com/checkOut`
-    const body = { slack_user: keyHolderSlackUser}
-
-    if (!keyHolderSlackUser) {
-      toast.error('Please select your slack name')
-      return;
-    }
-
-    try {
-      const res = await axios.put(url, body);
-      if ( res.status === 200) {
-        setStatus((prevStatus) => ({
-          ...prevStatus,
-          [keyHolderSlackUser] : "out",
-        }));
-        setSuccess(res.data.error);
-        setError(null);
-      }
-
-      toast.success(`Hey "${keyHolderSlackUser}", you have now Checked out successfully!`)
-    } catch (err) {
-      setError(err.response ? err.response.data.error : "Internal server error");
-      setSuccess(null);
-    }
-  }
-
-  // check out non key holder 
-  const guestCheckOut = async () => {
-    const url = `https://cyf-please-let-me-in.onrender.com/formCheckOut`
-    const boyd = { slack_user: guestSlackUser }
-
-    if (!guestSlackUser) {
-      toast.error('please select a your slack user..!!!')
-      return;
-    }
-
-    try {
-      const res = await axios.put(url, boyd);
-      if (res.status === 200) {
-        setGuestUserStatus((prevStatus) => ({
-          ...prevStatus,
-          [guestSlackUser]: "out",
-        }))
-      }
-
-      // to invoke delete function after checkout is successful
-       await deleteFormUser();
-       toast.success(`Hey "${guestSlackUser}", you have now Checked out successfully!`)
-    } catch (err) {
-      setError(err.response ? err.response.data.error : "Internal server error");
-      setSuccess(null);
-    }
-  }
-
-  const deleteFormUser = async () => {
-    const url = `https://cyf-please-let-me-in.onrender.com/delete`;
-    const body = { slack_user: guestSlackUser };
-  
-    if (!guestSlackUser) {
-      toast.error("Please select a Slack user.");
-      return;
-    }
-  
-    try {
-      const res = await axios.delete(url, { data: body });
-      if (res.status === 200) {
-        setSuccess("Data deleted successfully.");
-        setError(null);
-        
-        fetchData();  
-        guestData();  
-      }
-    } catch (err) {
-      setError(err.response ? err.response.data.error : "Internal server error");
-      setSuccess(null);
-    }
-  };
-
-  const toggleCheckInOut = () => {
-    if (status[keyHolderSlackUser] === "in") {
-      checkMeOut();
-    } else {
-      checkMeIn();
-    }
-  };
-  
-
   return (
     <div className="checkIn-container">
       <div className="checkIn-content">
-        <div className="key-holder-section">
-          <h2>
-            CheckIn <span className="building-name">Bedford</span> Key Holder
-          </h2>
-          <select 
-              className="checkIn-input"
-              value={keyHolderSlackUser}
-              onChange={(e) => setKeyHolderSlackUser(e.target.value)}
-          >
-            <option value="">Select Your Name</option>
-            {checkInPeople.map((element, index) => (
-              <option className="checkIn-input" key={element.slack_user} value={element.slack_user}>
-                {element.slack_user}
-              </option>
-            ))}
-          </select>
-
-          <div className="button-group">
-            <button
-              className="checkIn-button"
-              onClick={toggleCheckInOut}
-              style={{ backgroundColor: status[keyHolderSlackUser] === "in" ? "red" : "blue" }}
-            >
-              {status[keyHolderSlackUser] === "in" ? "Check Out" : "Check In"}
-            </button>
-          </div>
-
-          {success && <div className="message success">{success}</div>}
-          {error && <div className="message error">{error}</div>}
-
-          <hr />
-        </div>
-
-        <div className="non-key-holder-section">
-          <h2>Non Key Holder CheckIn/out</h2>
-
-          <form onSubmit={onSubmit}>
-            <div className="form-group">
-              <label>Slack User</label>
-              <input
-                type="text"
-                name="slack_user"
-                placeholder="Enter Name"
-                value={slackUser}
-                onChange={(e) => setSlackUser(e.target.value)}
-                className="checkIn-input"
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Phone Number</label>
-              <input
-                type="number"
-                name="phone_number"
-                placeholder="Enter Phone Number"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                className="checkIn-input"
-                required
-              />
-            </div>
-
-            <button className="checkIn-button submit-btn" type="submit">
-              Submit
-            </button>
-          </form>
-
-          <div className="key-holder-section">
-            <select 
-              className="checkIn-input"
-              value={guestSlackUser}
-              onChange={(e) => setGuestSlackUser(e.target.value)}
-            >
-              <option>Select Your Name</option>
-              {getFormData.map((element, index) => (
-                <option className="checkIn-input" key={element.slack_user} value={element.slack_user}>
-                  {element.slack_user}
-                </option>
-              ))}
-            </select>
-
-            <div className="button-group">
-              <button 
-                  className="checkIn-button"
-                  onClick={guestCheckOut}
-                  disabled={guestUserStatus[guestSlackUser] === "out"}              
-              >
-                CheckOut
-              </button>
-            </div>
-
-            {success && <div className="message success">{success}</div>}
-            {error && <div className="message error">{error}</div>}
-
-          </div>
-        </div>
+        <KeyHolderCheckIn
+          checkInPeople={checkInPeople}
+          status={status}
+          setStatus={setStatus}
+        />
+        <NonKeyHolderCheckIn guestData={guestData} />
+        <GuestCheckOut
+          getFormData={getFormData}
+          guestData={guestData}
+          guestUserStatus={guestUserStatus}
+          setGuestUserStatus={setGuestUserStatus}
+        />
       </div>
     </div>
   );
