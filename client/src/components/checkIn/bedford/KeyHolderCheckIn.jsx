@@ -62,6 +62,8 @@ const KeyHolderCheckIn = ({ checkInPeople, status, setStatus }) => {
       setError(err.response ? err.response.data.error : "Internal server error");
       setSuccess(null);
     }
+
+    setKeyHolderSlackUser("");
   };
 
   const toggleCheckInOut = () => {
