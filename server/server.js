@@ -2,13 +2,13 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 
-// create express instance with default configuration
+// Import dependencies
 const cors = require("cors");
 const port = process.env.PORT || 3099;
 const pool = require("./database/data");
 const bodyParser = require("body-parser");
 
-// Middleware
+// Middleware setup
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
@@ -18,7 +18,7 @@ app.listen(port, () => {
   console.log(`Server is running on Port: ${port}`);
 });
 
-// invoke routes from endpoint folder
+// Import routes from endpoint folder
 const getData = require("./endPoint/getData");
 const checkIn = require("./endPoint/checkIn");
 const checkOut = require("./endPoint/checkOut");
@@ -30,14 +30,14 @@ const deleteFormData = require("./endPoint/deleteFormData");
 const checkInCititec = require("./endPoint/checkInCititec");
 const checkOutCititec = require("./endPoint/checkOutCititec");
 
-// run the endpoint into the server
+// Set up routes
 app.get("/data", getData);
+app.get("/formData", getFormData);
+app.get("/getDataForCititec", getDataForCititec);
+app.post("/submit", postFormData);
 app.put("/checkIn", checkIn);
 app.put("/checkOut", checkOut);
-app.post("/submit", postFormData);
-app.get("/formData", getFormData);
 app.put("/formCheckOut", formCheckOut);
-app.get("/getDataForCititec", getDataForCititec);
-app.delete("/delete", deleteFormData);
 app.put("/checkInCititec", checkInCititec);
 app.put("/checkOutCititec", checkOutCititec);
+app.delete("/delete", deleteFormData);
